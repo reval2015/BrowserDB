@@ -1,0 +1,28 @@
+PODS:
+  - Alamofire (5.6.2)
+  - Realm (10.28.3):
+    - Realm/Headers (= 10.28.3)
+  - Realm/Headers (10.28.3)
+  - SDWebImage (5.13.2):
+    - SDWebImage/Core (= 5.13.2)
+  - SDWebImage/Core (5.13.2)
+
+DEPENDENCIES:
+  - Alamofire
+  - Realm
+  - SDWebImage
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - Realm
+    - SDWebImage
+
+SPEC CHECKSUMS:
+  Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
+  Realm: 64e66568d981de2496f81ecab2e1372b27dc7d58
+  SDWebImage: 72f86271a6f3139cc7e4a89220946489d4b9a866
+
+PODFILE CHECKSUM: d7f1bb39070ec4faa0b8e4efdba8e27301a66c82
+
+COCOAPODS: 1.11.3
