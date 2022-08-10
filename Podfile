@@ -5,5 +5,7 @@ target 'BrowserDB' do
 
   pod 'Alamofire'
   pod 'SDWebImage'
-  pod 'Realm'
+  pod 'RealmSwift'
+  pod 'youtube-ios-player-helper'
 end
+
