@@ -81,10 +81,6 @@ extension ViewControllerFilms {
       timer?.invalidate()
       timer = nil
     }
-    
-    
-
-   
     @objc func updateTimer() {
         updateTime()
     }
@@ -123,6 +119,61 @@ extension ViewControllerFilms {
         }
         }
     }
+    
+}
+var StatusSave = 1 // Status Save movie to list of the Watch later
+// or View movie in player end delete movie
+var watchMoviesID : [MovieID] = []
+var arrayWatchMovies : [MovieDetail] = []
+func requestWatchMovies(watchMoviesID: MovieID) {
+   // struct DecodableType: Decodable { var url: String }
+  //arrayWatchMovies = []
+    var url = ""
+   
+    //for i in 0 ... watchMoviesID.count-1 {
+         url = "https://api.themoviedb.org/3/tv/" + String(watchMoviesID.ID) +  "?api_key=f8c00b14f420dc4ee3d72cebaa60a86e"
+     if watchMoviesID.MoviesOrTV  == "Movie"{
+          url = "https://api.themoviedb.org/3/movie/" + String(watchMoviesID.ID) +  "?api_key=f8c00b14f420dc4ee3d72cebaa60a86e"}
+        let URL1: URL = URL(string: url)!
+        let request = AF.request(URL1).validate()
+            request.responseDecodable(of: MovieDetail.self)  {
+            responce in
+        do {
+            let allData = try JSONDecoder().decode(MovieDetail.self, from: responce.data!)
+            //print(allData)
+            
+            arrayWatchMovies.append(allData)
+            
+        } catch {
+            print(error)
+        }
+               
+    }
+    
+   // return MovieDetail.init(from: Decoder)
+    
+}
+var KeyOfVideo =  ""
+func requestVideoMovies(VideoMoviesID: MovieID) {
+    var url = ""
+         url = "https://api.themoviedb.org/3/tv/" + String(VideoMoviesID.ID) +  "/videos?api_key=f8c00b14f420dc4ee3d72cebaa60a86e"
+     if VideoMoviesID.MoviesOrTV  == "Movie"{
+          url = "https://api.themoviedb.org/3/movie/" + String(VideoMoviesID.ID) +  "/videos?api_key=f8c00b14f420dc4ee3d72cebaa60a86e"}
+        let URL1: URL = URL(string: url)!
+        let request = AF.request(URL1).validate()
+            request.responseDecodable(of: MovieDetail.self)  {
+            responce in
+        do {
+            let allData = try JSONDecoder().decode(KeyOfMovie.self, from: responce.data!)
+            KeyOfVideo = allData.results?[0].key ?? ""
+        } catch {
+            print(error)
+        }
+               
+    }
+    
+   // return MovieDetail.init(from: Decoder)
+    
 }
 extension ViewControllerFilms: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -144,6 +195,12 @@ extension ViewControllerFilms: UITableViewDelegate{
         
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    
+        let main = UIStoryboard(name: "Main", bundle: nil)
+    if let vc = main.instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController{
+        let movie = arrayOfMovies[indexPath.row]
+        StatusSave = 1
+        show(vc, sender: self)
+        vc.configureDetail(movie: movie)
     }
+}
 }

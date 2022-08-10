@@ -7,23 +7,58 @@
 
 import UIKit
 
+
 class ListViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
+    //var watchMoviesID : [MovieID] = []
+    //var arrayWatchMovies : [MovieDetail] = []
+    @IBOutlet var ListTableView: UITableView!
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBOutlet var ButtonListReload: UIButton!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        ButtonListReload.setTitle("List of the movies for watch later = " + String(watchMoviesID.count), for: UIControl.State.normal)
+        let nib = UINib(nibName: "CellPic", bundle: nil)
+        self.ListTableView.register(nib, forCellReuseIdentifier: "CellPic")
     }
-    */
+    @IBAction func ButtonPressedListReload(_ sender: Any) {
+        ButtonListReload.setTitle("List of the movies for watch later = " + String(watchMoviesID.count), for: UIControl.State.normal)
+        self.ListTableView.reloadData()
+    }
+}
 
+extension ListViewController: UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return watchMoviesID.count
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if arrayWatchMovies.count > indexPath.row {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "CellPic", for: indexPath) as? CellPic{
+            let movie = arrayWatchMovies[indexPath.row]
+            cell.Configure1(movie:movie)
+            return cell
+        }
+        }
+        return UITableViewCell()
+    }
+}
+extension ListViewController: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        248
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let main = UIStoryboard(name: "Main", bundle: nil)
+    if let vc1 = main.instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController{
+        ButtonListReload.setTitle("List of the movies for watch later = " + String(watchMoviesID.count), for: UIControl.State.normal)
+        self.ListTableView.reloadData()
+        if arrayWatchMovies.count > indexPath.row {
+           let movie = arrayWatchMovies[indexPath.row]
+           let movied = watchMoviesID[indexPath.row]
+           StatusSave = 2
+           show(vc1, sender: self)
+           vc1.configureDetail1(movie: movie,movied:  movied)
+        }
+        
+        }
+    }
 }
