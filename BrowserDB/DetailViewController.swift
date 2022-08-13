@@ -53,11 +53,14 @@ class DetailViewController: UIViewController {
         }
         }
         else
-        {
+        {if KeyOfVideo.isEmpty == false{
             playerView.isHidden = false
-            
             StatusSaveLabel.text = "Start of the load movie" + self.movieid.Title
             playerView.load(withVideoId: KeyOfVideo)
+            }
+            else{
+                StatusSaveLabel.text = "Not video for movie " + self.movieid.Title
+            }
         }
     }
     
@@ -85,7 +88,7 @@ class DetailViewController: UIViewController {
         movieid.Title = movie.title!
         movieid.MoviesOrTV = ""
         if movie.media_type == "movie" { movieid.MoviesOrTV = "Movie"}
-        movieid.release_date = movie.release_date!
+        movieid.release_date = movie.release_date ?? ""
         TilleLabel.text = movie.title
         OverviewLabel.text = movie.overview
         DateLabel.text = movie.release_date
@@ -106,7 +109,10 @@ class DetailViewController: UIViewController {
         StatusSave = 2
         movieid = movied
         TilleLabel.text = movie.title
-        OverviewLabel.text = movie.overview
+            OverviewLabel.text = movie.overview
+            //+ " "
+            //+ movie.genres[0]?.name
+            //+ " " + movie.genres[1]?.name + " " + movie.genres[2]?.name
         DateLabel.text = movieid.release_date
         PopuliarityLabel.text = String(format: "%.3f",movie.popularity!)
         let posterPath1 = movie.poster_path ?? ""

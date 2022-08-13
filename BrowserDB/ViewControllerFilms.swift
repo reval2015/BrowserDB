@@ -30,6 +30,9 @@ class ViewControllerFilms: UIViewController {
         requestFilms()
         let nib = UINib(nibName: "CellPic", bundle: nil)
         self.tableViewFilm.register(nib, forCellReuseIdentifier: "CellPic")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {// delay on 0.1 sec for block of code
+            self.tableViewFilm.reloadData()
+        }
     }
     @IBAction func swtchOfSegment(_ sender: Any) {
         requestFilms()
@@ -135,23 +138,14 @@ func requestWatchMovies(watchMoviesID: MovieID) {
      if watchMoviesID.MoviesOrTV  == "Movie"{
           url = "https://api.themoviedb.org/3/movie/" + String(watchMoviesID.ID) +  "?api_key=f8c00b14f420dc4ee3d72cebaa60a86e"}
         let URL1: URL = URL(string: url)!
-        let request = AF.request(URL1).validate()
-            request.responseDecodable(of: MovieDetail.self)  {
-            responce in
-        do {
-            let allData = try JSONDecoder().decode(MovieDetail.self, from: responce.data!)
-            //print(allData)
-            
-            arrayWatchMovies.append(allData)
-            
-        } catch {
-            print(error)
-        }
-               
-    }
-    
-   // return MovieDetail.init(from: Decoder)
-    
+        AF.request(URL1).validate()
+            .responseDecodable(of: MovieDetail.self) { responce in
+                do { let allData = try JSONDecoder().decode(MovieDetail.self, from: responce.data!)
+                    arrayWatchMovies.append(allData)
+                }catch{
+                    print(error)
+                }
+            }
 }
 var KeyOfVideo =  ""
 func requestVideoMovies(VideoMoviesID: MovieID) {
@@ -165,11 +159,11 @@ func requestVideoMovies(VideoMoviesID: MovieID) {
             responce in
         do {
             let allData = try JSONDecoder().decode(KeyOfMovie.self, from: responce.data!)
-            KeyOfVideo = allData.results?[0].key ?? ""
+            if allData.results?.isEmpty == false{
+                KeyOfVideo = allData.results?[0].key ?? ""}
         } catch {
             print(error)
         }
-               
     }
     
    // return MovieDetail.init(from: Decoder)

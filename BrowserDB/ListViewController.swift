@@ -17,9 +17,12 @@ class ListViewController: UIViewController {
     @IBOutlet var ButtonListReload: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        ButtonListReload.setTitle("List of the movies for watch later = " + String(watchMoviesID.count), for: UIControl.State.normal)
         let nib = UINib(nibName: "CellPic", bundle: nil)
         self.ListTableView.register(nib, forCellReuseIdentifier: "CellPic")
+        ButtonListReload.setTitle("List of the movies for watch later = " + String(watchMoviesID.count), for: UIControl.State.normal)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {// delay on 0.1 sec for block of code
+            self.ListTableView.reloadData()
+        }
     }
     @IBAction func ButtonPressedListReload(_ sender: Any) {
         ButtonListReload.setTitle("List of the movies for watch later = " + String(watchMoviesID.count), for: UIControl.State.normal)
@@ -62,3 +65,5 @@ extension ListViewController: UITableViewDelegate{
         }
     }
 }
+
+      

@@ -13,7 +13,7 @@ import Foundation
 
 
 // MARK: - Welcome
-struct MovieDetail: Decodable {
+struct MovieDetail: Codable {
     let adult : Bool?
     let backdrop_path : String?
     let belongs_to_collection : Belongs_to_collection?
@@ -35,7 +35,8 @@ struct MovieDetail: Decodable {
     let spoken_languages : [Spoken_languages]?
     let status : String?
     let tagline : String?
-    let title : String?
+    var title : String?
+    let name : String?
     let video : Bool?
     let vote_average : Double?
     let vote_count : Int?
@@ -64,6 +65,7 @@ struct MovieDetail: Decodable {
         case status = "status"
         case tagline = "tagline"
         case title = "title"
+        case name = "name"
         case video = "video"
         case vote_average = "vote_average"
         case vote_count = "vote_count"
@@ -93,6 +95,8 @@ struct MovieDetail: Decodable {
         status = try values.decodeIfPresent(String.self, forKey: .status)
         tagline = try values.decodeIfPresent(String.self, forKey: .tagline)
         title = try values.decodeIfPresent(String.self, forKey: .title)
+        name = try values.decodeIfPresent(String.self, forKey: .name)
+        if name?.count ?? 0 > 0 {title = name}
         video = try values.decodeIfPresent(Bool.self, forKey: .video)
         vote_average = try values.decodeIfPresent(Double.self, forKey: .vote_average)
         vote_count = try values.decodeIfPresent(Int.self, forKey: .vote_count)
