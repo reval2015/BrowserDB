@@ -193,7 +193,8 @@ extension ViewControllerFilms: UITableViewDelegate{
     if let vc = main.instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController{
         let movie = arrayOfMovies[indexPath.row]
         StatusSave = 1
-        show(vc, sender: self)
+        //show(vc, sender: self)
+        navigationController?.pushViewController(vc, animated: true)
         vc.configureDetail(movie: movie)
     }
 }

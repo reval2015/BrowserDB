@@ -30,6 +30,7 @@ class DetailViewController: UIViewController {
             ButtonSave.setTitle("Save to Watch later", for: UIControl.State.normal)
             ButtonSave.backgroundColor = .red
             ButtonSave.layer.cornerRadius = 10
+            ButtonExit.isHidden = true
             ButtonExit.setTitle("Exit", for: UIControl.State.normal)
             ButtonExit.backgroundColor = .yellow
             ButtonExit.layer.cornerRadius = 10
@@ -38,6 +39,7 @@ class DetailViewController: UIViewController {
             ButtonSave.setTitle("View Movie", for: UIControl.State.normal)
             ButtonSave.backgroundColor = .yellow
             ButtonSave.layer.cornerRadius = 10
+            ButtonExit.isHidden = false
             ButtonExit.setTitle("Delete Movie", for: UIControl.State.normal)
             ButtonExit.backgroundColor = .red
             ButtonExit.layer.cornerRadius = 10
@@ -89,7 +91,7 @@ class DetailViewController: UIViewController {
         movieid.MoviesOrTV = ""
         if movie.media_type == "movie" { movieid.MoviesOrTV = "Movie"}
         movieid.release_date = movie.release_date ?? ""
-        TilleLabel.text = movie.title
+        self.TilleLabel.text = movie.title
         OverviewLabel.text = movie.overview
         DateLabel.text = movie.release_date
         PopuliarityLabel.text = String(format: "%.3f",movie.popularity!)
@@ -102,13 +104,12 @@ class DetailViewController: UIViewController {
                 movieid.ID = 0
                 StatusSaveLabel.text = "Video is not for " + self.movieid.Title
             }
-        
         }
     }
         func configureDetail1(movie: MovieDetail, movied: MovieID){
         StatusSave = 2
         movieid = movied
-        TilleLabel.text = movie.title
+            DetailViewController.TilleLabel.text = movie.title
             OverviewLabel.text = movie.overview
             //+ " "
             //+ movie.genres[0]?.name

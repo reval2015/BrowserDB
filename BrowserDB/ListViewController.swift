@@ -58,8 +58,10 @@ extension ListViewController: UITableViewDelegate{
            let movie = arrayWatchMovies[indexPath.row]
            let movied = watchMoviesID[indexPath.row]
            StatusSave = 2
-           show(vc1, sender: self)
-           vc1.configureDetail1(movie: movie,movied:  movied)
+           //show(vc1, sender: self)
+            vc1.configureDetail1(movie: movie,movied:  movied)
+            navigationController?.pushViewController(vc1, animated: true)
+           //vc1.configureDetail1(movie: movie,movied:  movied)
         }
         
         }

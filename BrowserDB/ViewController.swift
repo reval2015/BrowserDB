@@ -26,8 +26,8 @@ extension ViewController: UITabBarDelegate{
         if item == Films {
             let main = UIStoryboard(name: "Main", bundle: nil)
         if let vc = main.instantiateViewController(withIdentifier: "ViewControllerFilms") as? ViewControllerFilms{
-            
-            show(vc, sender: self)
+            navigationController?.pushViewController(vc, animated: true)
+            //show(vc, sender: self)
         }}
        else{
            arrayWatchMovies = []
@@ -39,8 +39,8 @@ extension ViewController: UITabBarDelegate{
            }
             let main = UIStoryboard(name: "Main", bundle: nil)
            if let vc2 = main.instantiateViewController(withIdentifier: "ListViewController") as? ListViewController{
-              
-            show(vc2, sender: self)
+               navigationController?.pushViewController(vc2, animated: true)
+            //show(vc2, sender: self)
            }
         }
         
