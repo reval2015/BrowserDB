@@ -7,29 +7,27 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UITabBarController{
     let DM = DataManager()
-    @IBOutlet weak var tabBar1: UITabBar!
     
-    @IBOutlet weak var Films: UITabBarItem!
-    
-    @IBOutlet weak var WatchLater: UITabBarItem!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+     
+      //  navigationController?.navigationBar.isHidden = true
+
+
     }
 
-
+    
+    
 }
-extension ViewController: UITabBarDelegate{
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        if item == Films {
-            let main = UIStoryboard(name: "Main", bundle: nil)
-        if let vc = main.instantiateViewController(withIdentifier: "ViewControllerFilms") as? ViewControllerFilms{
-            navigationController?.pushViewController(vc, animated: true)
-            //show(vc, sender: self)
-        }}
-       else{
+extension ViewController: UITabBarControllerDelegate{
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        
+    
+    
+   /*     if (didSelectViewController.navigationItem.value(forKey: "ListViewController") != nil) == true {
            arrayWatchMovies = []
            watchMoviesID = DM.getList()
            if watchMoviesID.count > 0{
@@ -37,12 +35,8 @@ extension ViewController: UITabBarDelegate{
                    requestWatchMovies(watchMoviesID: watchMoviesID[i])
                }
            }
-            let main = UIStoryboard(name: "Main", bundle: nil)
-           if let vc2 = main.instantiateViewController(withIdentifier: "ListViewController") as? ListViewController{
-               navigationController?.pushViewController(vc2, animated: true)
-            //show(vc2, sender: self)
-           }
+     
         }
-        
+ */
 }
 }

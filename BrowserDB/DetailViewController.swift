@@ -12,7 +12,8 @@ import youtube_ios_player_helper
 class DetailViewController: UIViewController {
     var movieid = MovieID()
     let DM = DataManager()
-
+    var movieW: Movie?
+    var movieDetail: MovieDetail?
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var OverviewLabel: UILabel!
     @IBOutlet var TilleLabel: UILabel!
@@ -27,6 +28,8 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         playerView.isHidden = true
         if StatusSave == 1{
+//            let movie = arrayOfMovies[indexPath.row]
+            configureDetail(movie: movieW!)
             ButtonSave.setTitle("Save to Watch later", for: UIControl.State.normal)
             ButtonSave.backgroundColor = .red
             ButtonSave.layer.cornerRadius = 10
@@ -36,6 +39,7 @@ class DetailViewController: UIViewController {
             ButtonExit.layer.cornerRadius = 10
         }
         else {
+            configureDetail1(movie: movieDetail!,movied: movieid)
             ButtonSave.setTitle("View Movie", for: UIControl.State.normal)
             ButtonSave.backgroundColor = .yellow
             ButtonSave.layer.cornerRadius = 10
@@ -91,12 +95,12 @@ class DetailViewController: UIViewController {
         movieid.MoviesOrTV = ""
         if movie.media_type == "movie" { movieid.MoviesOrTV = "Movie"}
         movieid.release_date = movie.release_date ?? ""
-        self.TilleLabel.text = movie.title
+        TilleLabel.text = movie.title
         OverviewLabel.text = movie.overview
         DateLabel.text = movie.release_date
         PopuliarityLabel.text = String(format: "%.3f",movie.popularity!)
         let posterPath1 = movie.posterPath ?? ""
-        let imageURLString: String = "https://image.tmdb.org/t/p/original" + posterPath1
+        let imageURLString: String = Constants.URL.URLPoster + posterPath1
         let imageURL: URL = URL(string: imageURLString)!
         imageView.sd_setImage(with: imageURL, completed: nil)
         if movie.media_type != "movie"{
@@ -109,7 +113,7 @@ class DetailViewController: UIViewController {
         func configureDetail1(movie: MovieDetail, movied: MovieID){
         StatusSave = 2
         movieid = movied
-            DetailViewController.TilleLabel.text = movie.title
+            TilleLabel.text = movie.title
             OverviewLabel.text = movie.overview
             //+ " "
             //+ movie.genres[0]?.name
@@ -117,7 +121,7 @@ class DetailViewController: UIViewController {
         DateLabel.text = movieid.release_date
         PopuliarityLabel.text = String(format: "%.3f",movie.popularity!)
         let posterPath1 = movie.poster_path ?? ""
-        let imageURLString: String = "https://image.tmdb.org/t/p/original" + posterPath1
+        let imageURLString: String = Constants.URL.URLPoster  + posterPath1
         let imageURL: URL = URL(string: imageURLString)!
         imageView.sd_setImage(with: imageURL, completed: nil)
         requestVideoMovies(VideoMoviesID: movieid)

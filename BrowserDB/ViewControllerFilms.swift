@@ -23,6 +23,7 @@ class ViewControllerFilms: UIViewController {
     @IBOutlet var segmControl: UISegmentedControl!
     
     @IBOutlet var tableViewFilm: UITableView!
+    @IBOutlet var Item: UITabBarItem!
     override func viewDidLoad() {
         super.viewDidLoad()
         segmControl.setTitle("Movies",forSegmentAt: 0)
@@ -33,6 +34,8 @@ class ViewControllerFilms: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {// delay on 0.1 sec for block of code
             self.tableViewFilm.reloadData()
         }
+     //   ViewControllerFilms.providesPresentationContextTransitionStyle = true
+     //   ViewControllerFilms.definesPresentationContext = true
     }
     @IBAction func swtchOfSegment(_ sender: Any) {
         requestFilms()
@@ -98,15 +101,15 @@ extension ViewControllerFilms {
  
     }
     func requestFilms() {
-        var url = "https://api.themoviedb.org/3/search/tv?api_key=f8c00b14f420dc4ee3d72cebaa60a86e&language=en-US&page=1&include_adult=false&query=" + searchFilm
+        var url = Constants.URL.URLTVSearch + Constants.URL.APIKey + Constants.URL.URLSearchquery + searchFilm
         if countsearch == 2{
               if segmControl.selectedSegmentIndex == 0{
-                  url = "https://api.themoviedb.org/3/search/movie?api_key=f8c00b14f420dc4ee3d72cebaa60a86e&language=en-US&page=1&include_adult=false&query=" + searchFilm}
+                  url = Constants.URL.URLMovieSearch + Constants.URL.APIKey + Constants.URL.URLSearchquery + searchFilm}
         }
         else{
-       url = "https://api.themoviedb.org/3/trending/tv/week?api_key=f8c00b14f420dc4ee3d72cebaa60a86e"
+      url = Constants.URL.URLTVTrend + Constants.URL.APIKey
         if segmControl.selectedSegmentIndex == 0{
-             url = "https://api.themoviedb.org/3/trending/movie/week?api_key=f8c00b14f420dc4ee3d72cebaa60a86e"}
+             url = Constants.URL.URLMovieTrend + Constants.URL.APIKey}
         }
         self.arrayOfMovies = []
         let URL1: URL = URL(string: url)!
@@ -134,9 +137,9 @@ func requestWatchMovies(watchMoviesID: MovieID) {
     var url = ""
    
     //for i in 0 ... watchMoviesID.count-1 {
-         url = "https://api.themoviedb.org/3/tv/" + String(watchMoviesID.ID) +  "?api_key=f8c00b14f420dc4ee3d72cebaa60a86e"
+         url = Constants.URL.URLTV + String(watchMoviesID.ID) +  Constants.URL.APIKey
      if watchMoviesID.MoviesOrTV  == "Movie"{
-          url = "https://api.themoviedb.org/3/movie/" + String(watchMoviesID.ID) +  "?api_key=f8c00b14f420dc4ee3d72cebaa60a86e"}
+          url = Constants.URL.URLMovie + String(watchMoviesID.ID) +  Constants.URL.APIKey}
         let URL1: URL = URL(string: url)!
         AF.request(URL1).validate()
             .responseDecodable(of: MovieDetail.self) { responce in
@@ -150,9 +153,9 @@ func requestWatchMovies(watchMoviesID: MovieID) {
 var KeyOfVideo =  ""
 func requestVideoMovies(VideoMoviesID: MovieID) {
     var url = ""
-         url = "https://api.themoviedb.org/3/tv/" + String(VideoMoviesID.ID) +  "/videos?api_key=f8c00b14f420dc4ee3d72cebaa60a86e"
+    url = Constants.URL.URLTV + String(VideoMoviesID.ID) +  Constants.URL.URLvideos + Constants.URL.APIKey
      if VideoMoviesID.MoviesOrTV  == "Movie"{
-          url = "https://api.themoviedb.org/3/movie/" + String(VideoMoviesID.ID) +  "/videos?api_key=f8c00b14f420dc4ee3d72cebaa60a86e"}
+          url = Constants.URL.URLMovie + String(VideoMoviesID.ID) +  Constants.URL.URLvideos + Constants.URL.APIKey}
         let URL1: URL = URL(string: url)!
         let request = AF.request(URL1).validate()
             request.responseDecodable(of: MovieDetail.self)  {
@@ -191,11 +194,10 @@ extension ViewControllerFilms: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let main = UIStoryboard(name: "Main", bundle: nil)
     if let vc = main.instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController{
-        let movie = arrayOfMovies[indexPath.row]
+        vc.movieW = arrayOfMovies[indexPath.row]
         StatusSave = 1
-        //show(vc, sender: self)
-        navigationController?.pushViewController(vc, animated: true)
-        vc.configureDetail(movie: movie)
+        show(vc, sender: Any?.self)
+        //navigationController?.pushViewController(vc, animated: true)
     }
 }
 }
