@@ -101,7 +101,7 @@ extension ViewControllerFilms {
         var url = "https://api.themoviedb.org/3/search/tv?api_key= &language=en-US&page=1&include_adult=false&query=" + searchFilm
         if countsearch == 2{
               if segmControl.selectedSegmentIndex == 0{
-                  url = "https://api.themoviedb.org/3/search/movie?api_key=f8c00b14f420dc4ee3d72cebaa60a86e&language=en-US&page=1&include_adult=false&query=" + searchFilm}
+                  url = "https://api.themoviedb.org/3/search/movie?api_key= &language=en-US&page=1&include_adult=false&query=" + searchFilm}
         }
         else{
        url = "https://api.themoviedb.org/3/trending/tv/week?api_key= "
