@@ -98,15 +98,15 @@ extension ViewControllerFilms {
  
     }
     func requestFilms() {
-        var url = "https://api.themoviedb.org/3/search/tv?api_key=f8c00b14f420dc4ee3d72cebaa60a86e&language=en-US&page=1&include_adult=false&query=" + searchFilm
+        var url = "https://api.themoviedb.org/3/search/tv?api_key= &language=en-US&page=1&include_adult=false&query=" + searchFilm
         if countsearch == 2{
               if segmControl.selectedSegmentIndex == 0{
                   url = "https://api.themoviedb.org/3/search/movie?api_key=f8c00b14f420dc4ee3d72cebaa60a86e&language=en-US&page=1&include_adult=false&query=" + searchFilm}
         }
         else{
-       url = "https://api.themoviedb.org/3/trending/tv/week?api_key=f8c00b14f420dc4ee3d72cebaa60a86e"
+       url = "https://api.themoviedb.org/3/trending/tv/week?api_key= "
         if segmControl.selectedSegmentIndex == 0{
-             url = "https://api.themoviedb.org/3/trending/movie/week?api_key=f8c00b14f420dc4ee3d72cebaa60a86e"}
+             url = "https://api.themoviedb.org/3/trending/movie/week?api_key= "}
         }
         self.arrayOfMovies = []
         let URL1: URL = URL(string: url)!
@@ -134,9 +134,9 @@ func requestWatchMovies(watchMoviesID: MovieID) {
     var url = ""
    
     //for i in 0 ... watchMoviesID.count-1 {
-         url = "https://api.themoviedb.org/3/tv/" + String(watchMoviesID.ID) +  "?api_key=f8c00b14f420dc4ee3d72cebaa60a86e"
+         url = "https://api.themoviedb.org/3/tv/" + String(watchMoviesID.ID) +  "?api_key= "
      if watchMoviesID.MoviesOrTV  == "Movie"{
-          url = "https://api.themoviedb.org/3/movie/" + String(watchMoviesID.ID) +  "?api_key=f8c00b14f420dc4ee3d72cebaa60a86e"}
+          url = "https://api.themoviedb.org/3/movie/" + String(watchMoviesID.ID) +  "?api_key= "}
         let URL1: URL = URL(string: url)!
         AF.request(URL1).validate()
             .responseDecodable(of: MovieDetail.self) { responce in
@@ -150,9 +150,9 @@ func requestWatchMovies(watchMoviesID: MovieID) {
 var KeyOfVideo =  ""
 func requestVideoMovies(VideoMoviesID: MovieID) {
     var url = ""
-         url = "https://api.themoviedb.org/3/tv/" + String(VideoMoviesID.ID) +  "/videos?api_key=f8c00b14f420dc4ee3d72cebaa60a86e"
+         url = "https://api.themoviedb.org/3/tv/" + String(VideoMoviesID.ID) +  "/videos?api_key= "
      if VideoMoviesID.MoviesOrTV  == "Movie"{
-          url = "https://api.themoviedb.org/3/movie/" + String(VideoMoviesID.ID) +  "/videos?api_key=f8c00b14f420dc4ee3d72cebaa60a86e"}
+          url = "https://api.themoviedb.org/3/movie/" + String(VideoMoviesID.ID) +  "/videos?api_key= "}
         let URL1: URL = URL(string: url)!
         let request = AF.request(URL1).validate()
             request.responseDecodable(of: MovieDetail.self)  {
